@@ -24,7 +24,7 @@ export default function App() {
     enabled: !!query,
   });
   const movies = data?.results ?? [];
-  const totalPages = data?.total_pages ?? 0;
+  const totalPages = data?.total_page ?? 0;
 
   const handleSearch = (newQuery: string) => {
     setQuery(newQuery);
@@ -41,12 +41,26 @@ export default function App() {
 
       <Toaster />
 
-      {loading && <Loader />}
+      {isLoading && <Loader />}
 
-      {error && <ErrorMessage />}
+      {isError && <ErrorMessage />}
 
       {movies.length > 0 && (
         <MovieGrid movies={movies} onSelect={setSelectedMovie} />
+      )}
+
+      {totalPages > 1 && (
+        <ReactPaginate
+          pageCount={totalPages}
+          pageRangeDisplayed={5}
+          marginPagesDisplayed={1}
+          onPageChange={({ selected }) => setPage(selected + 1)}
+          forcePage={page - 1}
+          containerClassName={css.pagination}
+          activeClassName={css.active}
+          nextLabel="→"
+          previousLabel="←"
+        />
       )}
 
       {selectedMovie && (
