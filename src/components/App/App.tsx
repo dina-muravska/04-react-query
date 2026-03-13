@@ -23,26 +23,18 @@ export default function App() {
     queryFn: () => fetchMovies(query, page),
     enabled: !!query,
   });
+  const movies = data?.results ?? [];
+  const totalPages = data?.total_pages ?? 0;
 
-  const handleSearch = async (query: string) => {
-    try {
-      setMovies([]);
-      setError(false);
-      setLoading(true);
-
-      const data = await fetchMovies(query);
-
-      if (data.length === 0) {
-        toast.error("No movies found for your request.");
-      }
-
-      setMovies(data);
-    } catch {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
+  const handleSearch = (newQuery: string) => {
+    setQuery(newQuery);
+    setPage(1);
   };
+
+  if (movies.length === 0 && query && !isLoading) {
+    toast.error("No movies found for your request.");
+  }
+
   return (
     <>
       <SearchBar onSubmit={handleSearch} />
