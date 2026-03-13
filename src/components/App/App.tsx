@@ -24,7 +24,7 @@ export default function App() {
     enabled: !!query,
   });
   const movies = data?.results ?? [];
-  const totalPages = data?.total_page ?? 0;
+  const totalPages = data?.total_pages ?? 0;
 
   const handleSearch = (newQuery: string) => {
     setQuery(newQuery);

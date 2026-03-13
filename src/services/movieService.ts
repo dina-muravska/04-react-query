@@ -3,7 +3,7 @@ import type { Movie } from "../types/movie";
 
 interface MoviesResponse {
   results: Movie[];
-  total_page: number;
+  total_pages: number;
 }
 
 const TOKEN = import.meta.env.VITE_TMDB_TOKEN;
